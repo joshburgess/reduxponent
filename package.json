@@ -55,7 +55,11 @@
     "react",
     "component",
     "redux component",
+    "reducer",
+    "update",
     "reducer component",
+    "actions",
+    "state",
     "reduxponent",
     "react-redux"
   ],
