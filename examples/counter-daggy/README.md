@@ -1,6 +1,6 @@
-# Using Algebraic Data Types (ADTs)
+# A Counter Made Using Tagged Constructors
 
-Writing actions, reducers, state, & props using ADTs
+Writing actions, reducers, state, & props using tagged constructors created with daggy
 
 ## Quick start
 

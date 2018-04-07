@@ -1,4 +1,4 @@
-# Using Redux-Actions
+# A Counter Made Using Redux-Actions
 
 Writing actions & reducers using the redux-actions helper library
 
