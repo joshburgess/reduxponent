@@ -1,0 +1,21 @@
+{
+  "name": "using-redux-actions",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "daggy": "^1.2.0",
+    "date-fns": "^2.0.0-alpha.7",
+    "ramda": "^0.25.0",
+    "react": "16.4.0-alpha.0911da3",
+    "react-dom": "^16.4.0-alpha.0911da3",
+    "react-scripts": "1.1.1",
+    "redux-actions": "^2.3.0",
+    "reduxponent": "^0.0.2"
+  }
+}

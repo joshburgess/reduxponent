@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import enableLogging from './enableLogging'
+import logUpdate from './logUpdate'
+
+const isFunction = x => typeof x === 'function'
 
 class Reduxponent extends Component {
   constructor(props) {
@@ -10,27 +12,39 @@ class Reduxponent extends Component {
     this.getChildProps = this.getChildProps.bind(this)
   }
 
-  callReducer(action) {
-    const { reducer } = this.props
+  callReducer (action) {
+    const {
+      enableLogging,
+      mapCustomDataTypesToLogging,
+      reducer,
+    } = this.props
+
     const prevState = this.state
+
+    if (!reducer || typeof reducer !== 'function') {
+      const errMsg = 'Error: You must pass a reducer function' +
+        'in via the reducer prop when using dispatch.'
+
+      throw new Error(errMsg)
+    }
 
     const nextState = reducer(prevState, action)
 
-    if (this.props.enableLogging) {
-      if (this.props.mapCustomDataToLogging) {
-        const transormed = this.props.mapCustomDataToLogging({
+    if (enableLogging && process.env.NODE_ENV !== 'production') {
+      if (mapCustomDataTypesToLogging) {
+        const transormed = mapCustomDataTypesToLogging({
           prevState,
           action,
           nextState,
         })
 
-        enableLogging({
+        logUpdate({
           prevState: transormed.prevState,
           action: transormed.action,
           nextState: transormed.nextState,
         })
       } else {
-        enableLogging({
+        logUpdate({
           prevState,
           action,
           nextState,
@@ -41,7 +55,7 @@ class Reduxponent extends Component {
     this.setState(nextState === prevState ? null : nextState)
   }
 
-  getChildProps() {
+  getChildProps () {
     const { callReducer: dispatch, props, state } = this
 
     // gather non-parent props into "ownProps"
@@ -49,8 +63,9 @@ class Reduxponent extends Component {
       children,
       enableLogging,
       initialState,
+      lifecycle,
       mapActionCreatorsToProps,
-      mapStateToLog,
+      mapCustomDataTypesToLogging,
       mapStateToProps,
       name,
       reducer,
@@ -62,22 +77,24 @@ class Reduxponent extends Component {
 
     // dispatch & getState are exposed to facilitate redux-thunk style actions,
     // but this could be extended to mimic other types of middleware
-    const fromDispatch = mapActionCreatorsToProps
+    const fromActionCreators = mapActionCreatorsToProps
       ? { ...mapActionCreatorsToProps(dispatch, getState) }
       : {}
 
-    const fromState = mapStateToProps ? { ...mapStateToProps(state) } : {}
+    const fromState = mapStateToProps
+      ? { ...mapStateToProps(state) }
+      : {}
 
     // everything just gets merged into child props
     return {
       ...ownProps,
-      ...fromDispatch,
+      ...fromActionCreators,
       ...fromState,
       dispatch, // dispatch prop is provided solely as an escape hatch
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const { lifecycle } = this.props
 
     if (lifecycle && lifecycle.didMount) {
@@ -98,7 +115,7 @@ class Reduxponent extends Component {
       : true
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const { lifecycle } = this.props
 
     if (lifecycle && lifecycle.willUnmount) {
@@ -114,21 +131,32 @@ class Reduxponent extends Component {
 
     if (lifecycle && lifecycle.didUpdate) {
       lifecycle.didUpdate({
-        ...this.getChildProps(),
+        state: this.state,
+        props: this.props,
         prevProps,
         prevState,
       })
     }
   }
 
-  render() {
+  render () {
     const { children, render } = this.props
 
+    if (children && render) {
+      const errMsg = 'Warning: children & the render prop can' +
+      'not be used simultaneously. When both are provided, the' +
+      'render prop function will be ignored.'
+
+      console.error(errMsg)
+    }
+
+    const childProps = this.getChildProps()
+
     return children
-      ? typeof children === 'function'
-        ? children(this.getChildProps())
+      ? isFunction(children)
+        ? children(childProps)
         : children
-      : render ? render(this.getChildProps()) : null
+      : render ? render(childProps) : null
   }
 }
 
@@ -139,12 +167,12 @@ const ReduxponentWrapper = props => {
   const baseName = name || (render && render.name) || 'Reduxponent'
 
   class NamedReduxponent extends Reduxponent {}
-  NamedReduxponent.displayName = baseName + 'Container'
+  NamedReduxponent.displayName = `${baseName}Container`
 
   const Render =
-    children && typeof children === 'function'
+    children && isFunction(children)
       ? children
-      : render && typeof render === 'function' ? render : undefined
+      : render && isFunction(render) ? render : undefined
 
   const Child = childProps => <Render {...childProps} />
   Child.displayName = baseName

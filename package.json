@@ -1,6 +1,6 @@
 {
   "name": "reduxponent",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A declarative, reusable React component with a Redux-like API",
   "main": "index.js",
   "module": "es/index.js",

@@ -16,9 +16,8 @@ export const NEXT_STATE_LABEL = 'next state'
 export const ERROR_COLOR = '#F20404'
 export const ERROR_LABEL = 'error'
 
-// Logging
-const enableLogging = ({ prevState, action, nextState }) => {
-  const { type, payload } = action
+const logUpdate = ({ prevState, action, nextState }) => {
+  const { type } = action
 
   const timestamp = dateToString(Date.now())
   const bold = 'font-weight: bold;'
@@ -34,7 +33,7 @@ const enableLogging = ({ prevState, action, nextState }) => {
   console.log(
     `%c${ACTION_LABEL}`,
     `color: ${ACTION_COLOR}; ${bold}`,
-    payload ? { type, payload } : { type },
+    action,
   )
 
   console.log(
@@ -48,4 +47,4 @@ const enableLogging = ({ prevState, action, nextState }) => {
   return nextState
 }
 
-export default enableLogging
+export default logUpdate
