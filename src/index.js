@@ -102,7 +102,7 @@ class Reduxponent extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate (nextProps, nextState) {
     const { lifecycle } = this.props
 
     return lifecycle && lifecycle.shouldUpdate
@@ -126,7 +126,7 @@ class Reduxponent extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState) {
     const { lifecycle } = this.props
 
     if (lifecycle && lifecycle.didUpdate) {
@@ -176,6 +176,7 @@ const ReduxponentWrapper = props => {
 
   const Child = childProps => <Render {...childProps} />
   Child.displayName = baseName
+
   return (
     <NamedReduxponent
       {...defaultProps}

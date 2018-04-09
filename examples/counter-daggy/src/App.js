@@ -34,7 +34,7 @@ const Root = props => (
     {...props}
     enableLogging
     initialState={initialState}
-    mapCustomDataToLogging={daggyDataTypesToLogging}
+    mapCustomDataTypesToLogging={daggyDataTypesToLogging}
     mapStateToProps={mapStateToProps}
     name="App"
     render={App}

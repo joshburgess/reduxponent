@@ -6,7 +6,7 @@ const gzipSize = require('gzip-size')
 const exec = (command, extraEnv) =>
   execSync(command, {
     stdio: 'inherit',
-    env: Object.assign({}, process.env, extraEnv),
+    env: {...process.env, ...extraEnv },
   })
 
 console.log('Building CommonJS modules ...')

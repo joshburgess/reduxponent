@@ -5737,9 +5737,9 @@ redux-actions@^2.3.0:
     lodash-es "^4.17.4"
     reduce-reducers "^0.1.0"
 
-reduxponent@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/reduxponent/-/reduxponent-0.0.2.tgz#09af03abee9a66c75549b29f34764af659e1f485"
+reduxponent@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/reduxponent/-/reduxponent-0.0.4.tgz#aff2be251be733b1e675c03519e98adc04c2d9cd"
   dependencies:
     date-fns "^2.0.0-alpha.7"
 

@@ -1,6 +1,6 @@
 {
   "name": "reduxponent",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "A declarative, reusable React component with a Redux-like API",
   "main": "index.js",
   "module": "es/index.js",
@@ -10,8 +10,7 @@
     "umd"
   ],
   "scripts": {
-    "build": "node build/build.js",
-    "prettier": "prettier --no-semi --single-quote --trailing-comma=all --write 'src/**/*.js'"
+    "build": "node build/build.js"
   },
   "peerDependencies": {
     "react": "15.x || 16.x"
@@ -63,11 +62,6 @@
     "reduxponent",
     "react-redux"
   ],
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
   "eslintConfig": {
     "extends": "react-app"
   },

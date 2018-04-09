@@ -16,6 +16,6 @@
     "react-dom": "^16.4.0-alpha.0911da3",
     "react-scripts": "1.1.1",
     "redux-actions": "^2.3.0",
-    "reduxponent": "^0.0.2"
+    "reduxponent": "^0.0.4"
   }
 }
